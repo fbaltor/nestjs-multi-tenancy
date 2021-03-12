@@ -1,0 +1,41 @@
+version: '3.7'
+
+services:
+  api:
+    build:
+      # Must be the path to the location of the Dockerfile being built. It will
+      # send the whole application (./api folder in this case) to the docker
+      # daemon.
+      context: ./api
+      # Build only the 'development' part of our application (before the second
+      # FROM in the Dockerfile; check ./api/Dockerfile).
+      target: development
+    volumes:
+      # This volume is the key to keep the file's synchronization that enables 
+      # live reloading.
+      - ./api:/usr/src/app
+      # This anonymous volume prevent overriding the docker's node_modules with
+      # our local one (?).
+      - /usr/src/app/node_modules
+    # This env file must be in the same directory of the current
+    # docker-compose.yml. 
+    ports:
+      - ${SERVER_PORT}:${SERVER_PORT}
+    # This command will trigger the service, which in the development context
+    # means running it with live reloading. But we also need to set the volumes
+    # below.
+    command: npm run start:dev
+    env_file: .env
+
+  db-server:
+    build: ./db/postgresql
+    restart: always
+    tty: true
+    ports:
+      - 54320:5432
+    volumes:
+      - ./db/dbdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: api
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
