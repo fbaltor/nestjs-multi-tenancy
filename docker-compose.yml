@@ -33,9 +33,8 @@ services:
     tty: true
     ports:
       - 54320:5432
+    environment:
+      POSTGRES_PASSWORD: password
     volumes:
       - ./db/dbdata:/var/lib/postgresql/data
-    environment:
-      POSTGRES_DB: api
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
+      - ./db/postgresql/docker-entrypoint-initdb.d/:/docker-entrypoint-initdb.d/
