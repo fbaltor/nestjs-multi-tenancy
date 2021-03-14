@@ -1,7 +1,14 @@
 version: '3.7'
 
+networks:
+  api-internal-network:
+    driver: bridge
+
 services:
   api:
+    # Named containers must be used to stay synchronized with the database host
+    # address.
+    container_name: api
     build:
       # Must be the path to the location of the Dockerfile being built. It will
       # send the whole application (./api folder in this case) to the docker
@@ -26,15 +33,25 @@ services:
     # below.
     command: npm run start:dev
     env_file: .env
+    depends_on:
+      - db-server
+    networks:
+      - api-internal-network
 
   db-server:
+    # Named containers must be used to stay synchronized with the database host
+    # address.
+    container_name: db-server
     build: ./db/postgresql
     restart: always
     tty: true
     ports:
       - 54320:5432
     environment:
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
     volumes:
       - ./db/dbdata:/var/lib/postgresql/data
       - ./db/postgresql/docker-entrypoint-initdb.d/:/docker-entrypoint-initdb.d/
+    networks:
+      - api-internal-network

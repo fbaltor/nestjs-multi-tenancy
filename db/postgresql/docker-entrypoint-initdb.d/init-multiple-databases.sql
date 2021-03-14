@@ -1,0 +1,3 @@
+CREATE DATABASE db_a WITH OWNER = postgres;
+CREATE DATABASE db_b WITH OWNER = postgres;
+CREATE DATABASE db_c WITH OWNER = postgres;
