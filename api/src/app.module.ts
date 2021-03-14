@@ -25,6 +25,14 @@ const defaultOptions: TypeOrmModuleOptions = {
       ...defaultOptions,
       database: 'db_a',
     }),
+    TypeOrmModule.forRoot({
+      ...defaultOptions,
+      database: 'db_b',
+    }),
+    TypeOrmModule.forRoot({
+      ...defaultOptions,
+      database: 'db_c',
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],
