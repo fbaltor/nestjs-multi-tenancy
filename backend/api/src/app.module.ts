@@ -3,6 +3,14 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
+// Importing auth/keycloak related modules
+import { APP_GUARD } from '@nestjs/core';
+import {
+  KeycloakConnectModule,
+  ResourceGuard,
+  RoleGuard,
+  AuthGuard,
+} from 'nest-keycloak-connect';
 
 const defaultOptions: TypeOrmModuleOptions = {
   // The 'type' property must be a literal string (?)
@@ -17,6 +25,18 @@ const defaultOptions: TypeOrmModuleOptions = {
 
 @Module({
   imports: [
+    KeycloakConnectModule.registerAsync({
+      useFactory: () => {
+        const keycloakConfig = JSON.parse(process.env.KEYCLOAK_JSON);
+        return {
+          authServerUrl: keycloakConfig['auth-server-url'],
+          realm: keycloakConfig['realm'],
+          clientId: keycloakConfig['resource'],
+          secret: keycloakConfig['credentials']['secret'],
+        };
+      },
+    }),
+
     ConfigModule.forRoot({
       envFilePath: '.api.env',
       isGlobal: true,
@@ -35,6 +55,6 @@ const defaultOptions: TypeOrmModuleOptions = {
     }),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, { provide: APP_GUARD, useClass: AuthGuard }],
 })
 export class AppModule {}

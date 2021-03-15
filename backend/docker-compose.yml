@@ -23,15 +23,15 @@ services:
       - ./api:/usr/src/app
       # This anonymous volume prevent overriding the docker's node_modules with
       # our local one (?).
-      - /usr/src/app/node_modules
-    # This env file must be in the same directory of the current
-    # docker-compose.yml. 
+      # - /usr/src/app/node_modules
     ports:
       - ${SERVER_PORT}:${SERVER_PORT}
     # This command will trigger the service, which in the development context
     # means running it with live reloading. But we also need to set the volumes
     # below.
     command: npm run start:dev
+    # This env file must be in the same directory of the current
+    # docker-compose.yml. 
     env_file: .env
     depends_on:
       - db-server
