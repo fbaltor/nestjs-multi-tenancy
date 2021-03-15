@@ -5,7 +5,7 @@ import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 
 const defaultOptions: TypeOrmModuleOptions = {
-  // The 'type' must be a literal string (?)
+  // The 'type' property must be a literal string (?)
   type: 'postgres',
   host: process.env.DB_HOST,
   port: +process.env.DB_PORT,
