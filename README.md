@@ -1,1 +1,1 @@
-Simple repository for trying several approaches to multi-tenancy architecture with NestJS (https://docs.nestjs.com).
+Simple repository for trying several approaches to multi-tenancy architecture with NestJS (https://docs.nestjs.com), PostgreSQL (https://hub.docker.com/_/postgres) and Keycloak (https://www.keycloak.org/).
