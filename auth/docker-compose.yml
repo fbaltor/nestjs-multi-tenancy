@@ -26,7 +26,7 @@ services:
     networks:
       - auth-network
     volumes:
-      - ./keycloak/realms:/tmp
+      - ./keycloak/tmp:/tmp
 
   auth-db-server:
     build: ./db/postgresql
