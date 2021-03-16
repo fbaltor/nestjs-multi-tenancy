@@ -17,13 +17,16 @@ services:
       DB_PASSWORD: password
       DB_DATABASE: keycloak
       DB_SCHEMA: public
-      JDBC_PARAMS: 'useSSL=false'
+      KEYCLOAK_IMPORT: /tmp/app.json
     ports:
       - 8080:8080
+      - 8180:8080
     depends_on:
       - auth-db-server
     networks:
       - auth-network
+    volumes:
+      - ./keycloak/realms:/tmp
 
   auth-db-server:
     build: ./db/postgresql
@@ -40,4 +43,3 @@ services:
       POSTGRES_PASSWORD: password
     networks:
       - auth-network
-
