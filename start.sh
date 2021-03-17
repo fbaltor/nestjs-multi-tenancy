@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 if [ ! -d "./backend/api/node_modules" ]; then
   cd backend/api
   npm install
