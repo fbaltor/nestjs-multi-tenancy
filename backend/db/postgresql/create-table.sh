@@ -3,6 +3,8 @@
 #!/bin/bash
 set -e
 
+echo "create-table.sh script initiated..."
+
 PGPASSWORD=password
 
 psql --username "postgres" --dbname "db_a" <<-EOSQL
@@ -31,3 +33,5 @@ psql --username "postgres" --dbname "db_c" <<-EOSQL
   INSERT INTO products (product_id, product_name)
   VALUES (3, 'c');
 EOSQL
+
+echo "tables in db-server created..."

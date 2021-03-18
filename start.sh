@@ -17,6 +17,9 @@ if [ ! -d "./auth/db/dbdata" ]; then
 fi
 
 docker-compose -f ./auth/docker-compose.yml up -d
-
-docker-compose -f ./backend/docker-compose.yml -p backend up -d
-docker exec db-server bash < ./backend/db/postgresql/create-table.sh
+docker-compose -f ./backend/docker-compose.yml up -d
+until [ "`/usr/bin/docker inspect -f {{.State.Running}} db-server`"=="true" ]; do
+    sleep 0.1;
+done;
+echo "auth and backend services running in background..."
+docker exec -i db-server /bin/bash < ./backend/db/postgresql/create-table.sh
