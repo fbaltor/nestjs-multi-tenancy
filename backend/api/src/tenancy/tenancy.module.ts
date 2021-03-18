@@ -1,29 +1,29 @@
 import { Module, Global, Scope } from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
-import { createConnection, Connection, DatabaseType } from 'typeorm';
-
-const defaultOptions = {
-  // The 'type' property must be a literal string (?)
-  type: 'postgres' as const,
-  host: process.env.DB_HOST,
-  port: +process.env.DB_PORT,
-  username: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  synchronize: false,
-  entities: [__dirname + '/**/*.entity{.ts,.js}'],
-  retryAttempts: 5,
-  retryDelay: 1000,
-  keepConnectionAlive: true,
-};
+import { getConnection, Connection, DatabaseType } from 'typeorm';
+import { Products } from '../products/products.entity';
 
 function getTenantName(headers) {
-  const tenant = headers['authorization']['db_access'];
-  try {
-    const tenantName = tenant.substring(1);
-    return tenantName;
-  } catch (err) {
-    console.log(err);
-  }
+  const auth_token = headers['authorization'];
+  const auth_claims = parseJwt(auth_token);
+  const tenantName = auth_claims['db_access'][0].substring(1);
+  return tenantName;
+}
+
+function parseJwt(token) {
+  const base64Url = token.split('.')[1];
+  const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+  const jsonPayload = decodeURIComponent(
+    Buffer.from(base64, 'base64')
+      .toString()
+      .split('')
+      .map(function (c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      })
+      .join(''),
+  );
+
+  return JSON.parse(jsonPayload);
 }
 
 const connectionFactory = {
@@ -31,10 +31,7 @@ const connectionFactory = {
   scope: Scope.REQUEST,
   useFactory: async (req) => {
     const tenantName = getTenantName(req.headers);
-    const connection = await createConnection({
-      ...defaultOptions,
-      database: tenantName,
-    });
+    const connection = await getConnection(tenantName);
 
     return connection;
   },

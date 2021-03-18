@@ -13,20 +13,39 @@ import {
   AuthGuard,
 } from 'nest-keycloak-connect';
 import { ProductsModule } from './products/products.module';
+import { join } from 'path';
 
 const defaultOptions: TypeOrmModuleOptions = {
   // The 'type' property must be a literal string (?)
-  type: 'postgres',
+  type: 'postgres' as const,
   host: process.env.DB_HOST,
   port: +process.env.DB_PORT,
   username: process.env.DB_USER,
   password: process.env.DB_PASS,
   synchronize: false,
-  entities: [__dirname + '/**/*.entity{.ts,.js}'],
+  entities: [join(__dirname, '**', '*.entity{.ts,.js}')],
+  retryAttempts: 5,
+  retryDelay: 1000,
+  keepConnectionAlive: true,
 };
 
 @Module({
   imports: [
+    TypeOrmModule.forRoot({
+      ...defaultOptions,
+      database: 'db_a',
+      name: 'db_a',
+    }),
+    TypeOrmModule.forRoot({
+      ...defaultOptions,
+      database: 'db_b',
+      name: 'db_b',
+    }),
+    TypeOrmModule.forRoot({
+      ...defaultOptions,
+      database: 'db_c',
+      name: 'db_c',
+    }),
     KeycloakConnectModule.registerAsync({
       useFactory: () => {
         const keycloakConfig = JSON.parse(process.env.KEYCLOAK_JSON);
@@ -43,7 +62,6 @@ const defaultOptions: TypeOrmModuleOptions = {
       envFilePath: '.api.env',
       isGlobal: true,
     }),
-
     ProductsModule,
   ],
   controllers: [AppController],
