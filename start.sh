@@ -2,14 +2,14 @@
 
 set -e
 
+if [ ! -x "./auth/export-realm.sh" ] || [ ! -x "./auth/import-realm.sh" ]; then
+  sudo chmod +x ./auth/*.sh
+fi
+
 if [ ! -d "./backend/api/node_modules" ]; then
   cd backend/api
   npm install
   cd ../..
-fi
-
-if [ ! -x "./auth/export-realm.sh" ] || [ ! -x "./auth/import-realm.sh" ]; then
-  sudo chmod +x ./auth/*.sh
 fi
 
 docker-compose -f ./auth/docker-compose.yml up -d

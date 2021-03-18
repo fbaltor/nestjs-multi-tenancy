@@ -42,18 +42,6 @@ const defaultOptions: TypeOrmModuleOptions = {
       envFilePath: '.api.env',
       isGlobal: true,
     }),
-    TypeOrmModule.forRoot({
-      ...defaultOptions,
-      database: 'db_a',
-    }),
-    TypeOrmModule.forRoot({
-      ...defaultOptions,
-      database: 'db_b',
-    }),
-    TypeOrmModule.forRoot({
-      ...defaultOptions,
-      database: 'db_c',
-    }),
   ],
   controllers: [AppController],
   providers: [AppService, { provide: APP_GUARD, useClass: AuthGuard }],
