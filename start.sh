@@ -12,12 +12,13 @@ if [ ! -d "./backend/api/node_modules" ]; then
   cd ../..
 fi
 
-docker-compose -f ./auth/docker-compose.yml up -d
-docker-compose -f ./backend/docker-compose.yml up
-
-docker exec -i db-server bash < ./backend/db/postgresql/create-table.sh
-
 if [ ! -d "./auth/db/dbdata" ]; then
   ./auth/import-realm.sh
 fi
+
+docker-compose -f ./auth/docker-compose.yml up -d
+
+docker-compose -f ./backend/docker-compose.yml -p backend up -d
+docker exec -i db-server bash < ./backend/db/postgresql/create-table.sh
+
 
