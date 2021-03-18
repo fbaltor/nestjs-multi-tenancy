@@ -6,7 +6,7 @@ set -e
 PGPASSWORD=password
 
 psql --username "postgres" --dbname "db_a" <<-EOSQL
-  CREATE TABLE products (
+  CREATE TABLE IF NOT EXISTS products (
           product_id INTEGER,
           product_name VARCHAR
   );
@@ -15,7 +15,7 @@ psql --username "postgres" --dbname "db_a" <<-EOSQL
 EOSQL
 
 psql --username "postgres" --dbname "db_b" <<-EOSQL
-  CREATE TABLE products (
+  CREATE TABLE IF NOT EXISTS products (
           product_id INT,
           product_name VARCHAR
   );
@@ -24,7 +24,7 @@ psql --username "postgres" --dbname "db_b" <<-EOSQL
 EOSQL
 
 psql --username "postgres" --dbname "db_c" <<-EOSQL
-  CREATE TABLE products (
+  CREATE TABLE IF NOT EXISTS products (
           product_id INT,
           product_name VARCHAR
   );
