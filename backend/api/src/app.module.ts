@@ -12,6 +12,7 @@ import {
   RoleGuard,
   AuthGuard,
 } from 'nest-keycloak-connect';
+import { ProductsModule } from './products/products.module';
 
 const defaultOptions: TypeOrmModuleOptions = {
   // The 'type' property must be a literal string (?)
@@ -42,6 +43,8 @@ const defaultOptions: TypeOrmModuleOptions = {
       envFilePath: '.api.env',
       isGlobal: true,
     }),
+
+    ProductsModule,
   ],
   controllers: [AppController],
   providers: [AppService, { provide: APP_GUARD, useClass: AuthGuard }],
