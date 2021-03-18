@@ -19,6 +19,4 @@ fi
 docker-compose -f ./auth/docker-compose.yml up -d
 
 docker-compose -f ./backend/docker-compose.yml -p backend up -d
-docker exec -i db-server bash < ./backend/db/postgresql/create-table.sh
-
-
+docker exec db-server bash < ./backend/db/postgresql/create-table.sh
