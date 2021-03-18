@@ -316,7 +316,31 @@
       } ]
     }
   },
-  "groups" : [ ],
+  "groups" : [ {
+    "id" : "67908bf6-a3dc-415c-8e1b-ba43c1f5ffe6",
+    "name" : "db_a",
+    "path" : "/db_a",
+    "attributes" : { },
+    "realmRoles" : [ ],
+    "clientRoles" : { },
+    "subGroups" : [ ]
+  }, {
+    "id" : "d290da4e-1a26-4cf5-bf69-bbb1f47a6155",
+    "name" : "db_b",
+    "path" : "/db_b",
+    "attributes" : { },
+    "realmRoles" : [ ],
+    "clientRoles" : { },
+    "subGroups" : [ ]
+  }, {
+    "id" : "159e3556-e9e8-43c6-bab3-167e2115f0fb",
+    "name" : "db_c",
+    "path" : "/db_c",
+    "attributes" : { },
+    "realmRoles" : [ ],
+    "clientRoles" : { },
+    "subGroups" : [ ]
+  } ],
   "defaultRoles" : [ "offline_access", "uma_authorization" ],
   "requiredCredentials" : [ "password" ],
   "otpPolicyType" : "totp",
@@ -387,17 +411,17 @@
     "notBefore" : 0,
     "groups" : [ ]
   }, {
-    "id" : "13d65399-c764-4069-a3e5-305c6829338f",
-    "createdTimestamp" : 1615850483020,
-    "username" : "user",
+    "id" : "afdf7759-d7e9-43c4-abfe-7d1229ab4809",
+    "createdTimestamp" : 1616082929030,
+    "username" : "user_a",
     "enabled" : true,
     "totp" : false,
-    "emailVerified" : true,
+    "emailVerified" : false,
     "credentials" : [ {
-      "id" : "6622c10b-ebd1-408d-8b74-5ae984883363",
+      "id" : "4a9338b3-76b0-408d-9300-412e365ec106",
       "type" : "password",
-      "createdDate" : 1615850493405,
-      "secretData" : "{\"value\":\"O7d+K0s5KRPWKcHAwe6GeWE/ujjxDmq4SCcETuf7zMEQpQUBE8SmbaIHdrGhv9iintC1m1BNyOz1eFcaiGTWMQ==\",\"salt\":\"UioR1N3zQ/OADMwL3cLdGg==\",\"additionalParameters\":{}}",
+      "createdDate" : 1616082937741,
+      "secretData" : "{\"value\":\"y6fdnDMOoc+5kewjhu48uYnMoC7mrrMPiABzz3Y8URNzHe0eYOlo9nsVSj7ijvTsVPaAUuO3yDQkSFOESxFY9w==\",\"salt\":\"UtpiG/hBpzm4rdb5d37KNg==\",\"additionalParameters\":{}}",
       "credentialData" : "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\",\"additionalParameters\":{}}"
     } ],
     "disableableCredentialTypes" : [ ],
@@ -407,7 +431,51 @@
       "account" : [ "manage-account", "view-profile" ]
     },
     "notBefore" : 0,
-    "groups" : [ ]
+    "groups" : [ "/db_a" ]
+  }, {
+    "id" : "1d2c6db2-0e27-4f85-95cc-56acead69e5d",
+    "createdTimestamp" : 1616070760014,
+    "username" : "user_b",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "credentials" : [ {
+      "id" : "d6adb232-47c1-4344-a1f2-1b3166b86559",
+      "type" : "password",
+      "createdDate" : 1616070837090,
+      "secretData" : "{\"value\":\"ZmCraJSSozfYHRH7blU1Z76UlmHvWFKmFwYTFTtaChUnKa7/r3fGSSyzPvXsB0tof8VNNbLt2r2ScSuW2xPV6A==\",\"salt\":\"1ksOL4KP7o4BRRaIldFGsA==\",\"additionalParameters\":{}}",
+      "credentialData" : "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\",\"additionalParameters\":{}}"
+    } ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "offline_access", "uma_authorization" ],
+    "clientRoles" : {
+      "account" : [ "manage-account", "view-profile" ]
+    },
+    "notBefore" : 0,
+    "groups" : [ "/db_b" ]
+  }, {
+    "id" : "2d1361a2-0632-4220-822e-952e5e2e528a",
+    "createdTimestamp" : 1616082952527,
+    "username" : "user_c",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "credentials" : [ {
+      "id" : "2820f3ad-9178-4898-a009-e57ae5e38958",
+      "type" : "password",
+      "createdDate" : 1616082968084,
+      "secretData" : "{\"value\":\"6aZWVVvRS0KxtVn+uDAdu1tjdOJcg7Bh1MTZ59DFEP0g8oku8GhQQO2/2anKRnZQ1VFrSlDHFE9G3AE5H7joEg==\",\"salt\":\"P6WrVD4eDQJyo/3toiuAag==\",\"additionalParameters\":{}}",
+      "credentialData" : "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\",\"additionalParameters\":{}}"
+    } ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "offline_access", "uma_authorization" ],
+    "clientRoles" : {
+      "account" : [ "manage-account", "view-profile" ]
+    },
+    "notBefore" : 0,
+    "groups" : [ "/db_c" ]
   } ],
   "scopeMappings" : [ {
     "clientScope" : "offline_access",
@@ -598,6 +666,19 @@
         "access.token.claim" : "true",
         "claim.name" : "clientHost",
         "jsonType.label" : "String"
+      }
+    }, {
+      "id" : "62c38db6-b561-4be8-a53d-f3dfc52d38f8",
+      "name" : "Database access",
+      "protocol" : "openid-connect",
+      "protocolMapper" : "oidc-group-membership-mapper",
+      "consentRequired" : false,
+      "config" : {
+        "full.path" : "true",
+        "id.token.claim" : "true",
+        "access.token.claim" : "true",
+        "claim.name" : "db_access",
+        "userinfo.token.claim" : "true"
       }
     } ],
     "defaultClientScopes" : [ "web-origins", "role_list", "roles", "profile", "email" ],
